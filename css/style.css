@@ -6,6 +6,10 @@ h1 {
 text-align: center;
 }
 
+h2 {
+  font-size: 25px;
+}
+
 #gameboard {
   /*width: 31.2em; 330px
   height: 31.2em; 330px
@@ -27,3 +31,14 @@ text-align: center;
   /*//display: float;*/
   vertical-align: top;
 }
+
+#gameInfo {
+  border: green solid 1px;
+  text-align: center;
+}
+
+.scoreboard {
+  border: orange solid 1px;
+  text-align: left;
+}
+
