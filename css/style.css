@@ -1,0 +1,29 @@
+body {
+  font-size: 20px;
+}
+
+h1 {
+text-align: center;
+}
+
+#gameboard {
+  /*width: 31.2em; 330px
+  height: 31.2em; 330px
+  */
+  width: 330px;
+  height: 330px;
+  margin: auto;
+}
+
+.cell {
+  border : blue solid 1px;
+  /*width: 100em;
+  height: 10em;*/
+  width: 100px;
+  height: 100px;
+  font-size: 30px;
+  display: inline-block;
+  float : left;
+  /*//display: float;*/
+  vertical-align: top;
+}
