@@ -1,44 +1,93 @@
 body {
-  font-size: 20px;
+    font-size: 20px;
+    color: lightblue;
+    background-image: url("circuit.jpg");
+    background-size: 100% 100%;
+/*    background-repeat: no-repeat;
+*/    font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
-text-align: center;
-}
-
-h2 {
-  font-size: 25px;
+    text-align: center;
+    font-size: 50px;
 }
 
 #gameboard {
-  /*width: 31.2em; 330px
-  height: 31.2em; 330px
-  */
-  width: 330px;
-  height: 330px;
-  margin: auto;
+    width: 460px;
+    height: 460px;
+    margin: auto;
+    margin-bottom: 40px;
 }
 
 .cell {
-  border : blue solid 1px;
-  /*width: 100em;
-  height: 10em;*/
-  width: 100px;
-  height: 100px;
-  font-size: 30px;
-  display: inline-block;
-  float : left;
-  /*//display: float;*/
-  vertical-align: top;
+    width: 150px;
+    height: 150px;
+    font-size: 80px;
+    display: inline-block;
+    float: left;
 }
 
-#gameInfo {
-  border: green solid 1px;
-  text-align: center;
+#\30,
+#\31,
+#\33,
+#\34 {
+    border-right: lightblue solid 3px;
+    border-bottom: lightblue solid 3px;
+}
+
+#\36,
+#\37 {
+    border-right: lightblue solid 3px;
+}
+
+#\32,
+#\35 {
+    border-bottom: lightblue solid 3px;
 }
 
 .scoreboard {
-  border: orange solid 1px;
-  text-align: left;
+    width: 460px;
+    height: 90px;
+    margin-top: 33px;
+    text-align: center;
+    margin: 0 auto;
 }
 
+#playerX,
+#tie {
+    border-right: solid transparent 3px;
+    width: 150px;
+    float: left;
+}
+
+#scoreX,
+#scoreT,
+#scoreO {
+    font-size: 45px;
+}
+
+#playerO {
+    width: 150px;
+    float: left;
+}
+
+#control {
+    width: 340px;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+#newGame,
+#playAgain {
+    width: 170px;
+    height: 50px;
+    float: left;
+    font-size: 23px;
+    text-align: center;
+}
+
+#gameInfo {
+    text-align: center;
+    font-size: 40px;
+}

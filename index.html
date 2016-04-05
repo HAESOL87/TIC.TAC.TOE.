@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Tic Tac Toe</title>
-    <link rel = 'stylesheet' href = './css/style.css'>
-    <script type = "text/javascript" src="./js/jquery.js"></script>
-    <script type = "text/javascript" src="./js/app2.js"></script>
+    <title>Tic. Tac. Toe.</title>
+    <link rel='stylesheet' href='./css/style.css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/app2.js"></script>
 </head>
+
 <body>
-    <h1>"Ultimate Tic Tac Toe"</h1>
-    <section id = "gameboard">
-      <section class = "row">
-        <div class = "cell" id = "0"></div>
-        <div class = "cell" id = "1"></div>
-        <div class = "cell" id = "2"></div>
-      </section>
-      <section class = "row">
-        <div class = "cell" id = "3"></div>
-        <div class = "cell" id = "4"></div>
-        <div class = "cell" id = "5"></div>
-      </section>
-      <section class = "row">
-        <div class = "cell" id = "6"></div>
-        <div class = "cell" id = "7"></div>
-        <div class = "cell" id = "8"></div>
-      </section>
+    <h1>TIC. TAC. TOE.</h1>
+    <section id="mainboard">
+        <section id="gameboard">
+            <section class="row1">
+                <div class="cell" id="0"></div>
+                <div class="cell" id="1"></div>
+                <div class="cell" id="2"></div>
+            </section>
+            <section class="row2">
+                <div class="cell" id="3"></div>
+                <div class="cell" id="4"></div>
+                <div class="cell" id="5"></div>
+            </section>
+            <section class="row3">
+                <div class="cell" id="6"></div>
+                <div class="cell" id="7"></div>
+                <div class="cell" id="8"></div>
+            </section>
+        </section>
     </section>
-    <div id = "gameInfo">Let's Play!</div>
-    <div class = "control">
-      <button id = 'newGame'>New Game</button>
-      <button id = 'playAgain'>Play Again</button>
-    </div>
-    <section class = "scoreboard">
-      <h2>Scoreboard</h2>
-      <div id = playerX>Player X : </div>
-      <div id = playerO>Player O : </div>
-      <div id = tie>Tie : </div>
+    <!--     <h2 id="gameInfo">Let's Play!</h2>
+ -->
+    <section class="scoreboard">
+        <div id=playerX>PLAYER X
+            <div id=scoreX>0</div>
+        </div>
+        <div id=tie>TIE
+            <div id=scoreT>0</div>
+        </div>
+        <div id=playerO>PLAYER O
+            <div id=scoreO>0</div>
+        </div>
+    </section>
+    <section id="control">
+        <div id='newGame'>&bull; New Game</div>
+        <div id='playAgain'>&bull; Play Again</div>
     </section>
 </body>
+
 </html>
