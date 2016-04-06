@@ -8,9 +8,32 @@ $(document).ready(function() {
     var playerOWin = 0;
     var tie = 0;
     var gameBoardOnOff = 0;
+    var turnComputerOff = 0;
+    var lockReset = 0;
+    var selectGameMode;
+
+    selectGameMode = gameMode();
+
+
+    if (selectGameMode == 1) {
+        $('body').attr("style", 'background-image: url("./css/circuit.jpg"); font-family: "Orbitron", sans-serif;');
+        $('#playerO').html('COMPUTER');
+        $("#playerO").append("<div id = scoreO>0</div>");
+        displayStatus(turn);
+    }
+
+    if (selectGameMode == 2) {
+        $('body').attr("style", 'background-image: url("./css/background.jpg"); font-family: "Montserrat", sans-serif;');
+        displayStatus(turn);
+    }
 
     $($gameCells).on('click', function() {
-        placeMove(this, gameBoardOnOff);
+        if (selectGameMode == 1) {
+            playHuman(this, gameBoardOnOff);
+        }
+        if (selectGameMode == 2) {
+            placeMove(this, gameBoardOnOff);
+        }
     });
 
     $('#newGame').on('click', function() {
@@ -18,35 +41,88 @@ $(document).ready(function() {
     });
 
     $('#playAgain').on('click', function() {
-        resetBoard();
+        resetBoard(lockReset);
     });
 
     //Place either "X" or "O" on the game board.
-    function placeMove(this2, gameBoardOnOff) {
-        if (gameBoardOnOff == 0) {
-            if(moves[this2.id] == 'X' || moves[this2.id] == 'O') {
-                console.log('Position filled')
+    function placeMove(this2, gameBoardOnOff2) {
+        if (gameBoardOnOff2 == 0) {
+            if (moves[this2.id] == 'X' || moves[this2.id] == 'O') {
+                console.log('Position filled');
+            } else {
+                console.log('Move was placed');
+                console.log(this2.id);
+
+                $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;");
+
+                displayStatus(turn);
+                moves[this2.id] = turn;
+                count++;
+                turn = (turn == 'X') ? 'O' : 'X';
+                displayStatus(turn);
+                checkWin(moves, count);
+                console.log(moves, count);
             }
-            else {
-            console.log('Move was placed');
-            console.log(this2.id);
-
-            $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;")
-
-            moves[this2.id] = turn;
-            count++;
-            turn = (turn == 'X') ? 'O' : 'X';
-
-            displayStatus(turn);
-            checkWin(moves, count);
-            console.log(moves, count);
-            }
-        } else if (gameBoardOnOff == 1) {
+        } else if (gameBoardOnOff2 == 1) {
             console.log('Gameboard is off');
         }
     }
 
-    //Check whether player "X" or "O" wins.
+    //Place either "X" or "O" on the game board.
+    function playHuman(this2, gameBoardOnOff2) {
+        if (gameBoardOnOff2 == 0) {
+            if (moves[this2.id] == 'X' || moves[this2.id] == 'O') {
+                console.log('Position filled');
+            } else {
+                console.log('Human move was placed at ' + this2.id);
+
+                $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;");
+
+                displayStatus(turn);
+                moves[this2.id] = turn;
+                count++;
+                turn = (turn == 'X') ? 'O' : 'X';
+
+                displayStatus(turn);
+                checkWin(moves, count);
+                console.log(moves, count);
+
+                gameBoardOnOff = 1;
+                setTimeout(function() {
+                    if (turnComputerOff == 0) {
+                        gameBoardOnOff = 0;
+                        playComputer();
+                    }
+                }, 1500);
+            }
+        } else if (gameBoardOnOff2 == 1) {
+            console.log('Gameboard is off');
+        }
+    }
+
+    //Computer places move
+    function playComputer() {
+        var randomNum = Math.floor(Math.random() * 9);
+        if (count != 9) {
+            while (moves[randomNum] == 'X' || moves[randomNum] == 'O') {
+                randomNum = Math.floor(Math.random() * 9);
+            }
+        }
+        moves[randomNum] = turn;
+        test = '#' + randomNum;
+
+        console.log('Computer move is placed at ' + randomNum);
+
+        $(test).html(turn).attr("style", "color: red; text-align: center; line-height:150px;")
+        count++;
+        displayStatus(turn);
+        turn = (turn == 'X') ? 'O' : 'X';
+        displayStatus(turn);
+        console.log(moves, count);
+        checkWin(moves, count);
+    }
+
+    //Check whether player "X" or "O" wins. Also, determine if it is a tie.
     function checkWin(move, count) {
         if ((move[0] == 'X' && move[1] == 'X' && move[2] == 'X') ||
             (move[3] == 'X' && move[4] == 'X' && move[5] == 'X') ||
@@ -58,6 +134,7 @@ $(document).ready(function() {
             (move[2] == 'X' && move[4] == 'X' && move[6] == 'X')) {
             displayStatus(3);
             playerXWin++;
+            turnComputerOff = 1;
             gameBoardOnOff = 1;
             updateScoreboard(1, playerXWin);
         } else if ((move[0] == 'O' && move[1] == 'O' && move[2] == 'O') ||
@@ -75,20 +152,26 @@ $(document).ready(function() {
         } else if (count == 9) {
             displayStatus(5);
             tie++;
+            turnComputerOff = 1;
             gameBoardOnOff = 1;
             updateScoreboard(3, tie);
+
         }
     }
 
     //Reset board when user wants to play a another game.
     function resetBoard(num) {
-        $($gameCells).removeAttr("style");
-        $($gameCells).empty();
-        moves = ["", "", "", "", "", "", "", "", ""];
-        count = 0;
-        turn = 'X';
-        gameBoardOnOff = 0;
-        displayStatus(6);
+        if (num == 1) {
+            $($gameCells).removeAttr("style");
+            $($gameCells).empty();
+            moves = ["", "", "", "", "", "", "", "", ""];
+            count = 0;
+            turn = 'X';
+            gameBoardOnOff = 0;
+            turnComputerOff = 0;
+            lockReset = 0;
+            displayStatus(turn);
+        }
     }
 
     //Update scoreboard
@@ -120,28 +203,65 @@ $(document).ready(function() {
         }
     }
 
-    //Display current turn on screen
+    //Display current turn on scoreboard
     function displayStatus(turn2) {
-        console.log('Is displayStatus function called?');
         if (turn2 == 'X') {
-            $('#gameInfo').html('"X" Turn');
+            $('#tie').attr("style", "opacity: 0.2;");
+            $('#playerO').attr("style", "opacity: 0.2;");
+            $('#playerX').attr("style", "opacity: 1;");
         } else if (turn2 == 'O') {
-            $('#gameInfo').html('"O" Turn');
+            $('#playerX').attr("style", "opacity: 0.2;");
+            $('#tie').attr("style", "opacity: 0.2;");
+            $('#playerO').attr("style", "opacity: 1;");
         } else if (turn2 == 3) {
-            $('#gameInfo').html('"X" Wins!');
+            blink(1);
+            $('#playerX').attr("style", "opacity: 1;");
+            $('#tie').attr("style", "opacity: 1;");
+            $('#playerO').attr("style", "opacity: 1;");
         } else if (turn2 == 4) {
-            $('#gameInfo').html('"O" Wins!');
+            blink(2);
+            $('#playerX').attr("style", "opacity: 1;");
+            $('#tie').attr("style", "opacity: 1;");
+            $('#playerO').attr("style", "opacity: 1;");
         } else if (turn2 == 5) {
-            $('#gameInfo').html("It's a Tie");
-        } else {
-            $('#gameInfo').html("Let's Play! X turn.");
+            blink(3);
+            $('#playerX').attr("style", "opacity: 1;");
+            $('#tie').attr("style", "opacity: 1;");
+            $('#playerO').attr("style", "opacity: 1;");
         }
     }
 
-    //Choose game mode (PvP vs PvC)
-    function gameMode() {
-        var mode = prompt('Please choose your game mode! (PvP or PvC)');
+    //Make winner blink to indicate winner
+    function blink(num) {
+        var winner;
+        if (num == 1) {
+            winner = $('#playerX');
+        } else if (num == 2) {
+            winner = $('#playerO');
+        } else if (num == 3) {
+            winner = $('#tie');
+        }
+
+        var blink2 = setInterval(function() {
+            if (winner.css('visibility') == 'hidden') {
+                winner.css('visibility', 'visible');
+            } else {
+                winner.css('visibility', 'hidden');
+            }
+        }, 700);
+
+        setTimeout(function() {
+            clearInterval(blink2);
+            lockReset = 1;
+        }, 4500);
     }
+
+
+    //Choose game mode (1 player vs 2 player)
+    function gameMode() {
+        var mode = prompt('Choose Game Mode\n  1. 1 Player\n  2. 2 Player');
+       return mode;
+    }
+
+
 })
-
-

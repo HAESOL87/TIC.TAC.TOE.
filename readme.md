@@ -3,7 +3,9 @@
   
 ## **Overview:**  
 
-Create a fully functional Tic Tac Toe game using the knowledge I have acquired during the first two weeks of class.
+Create a fully functional Tic Tac Toe game using the knowledge I have acquired during the first two weeks of WDI class. 
+
+Demo: <http://h4ru87.github.io/TIC.TAC.TOE./>
 	
 ## **Key Goals:**
 
@@ -15,14 +17,14 @@ Create a fully functional Tic Tac Toe game using the knowledge I have acquired d
 ## **Planning**: 
 
 Wireframe: 
-![Alt Image Text](/Users/H4RU/ga/wdi/projects/ttt/trello.png "Optional Title")
+![Alt Image Text](./trello.png "Screenshot")
 
 [Trello Website](https://trello.com/b/ewDkKXAl/project-tic-tac-toe)
 
 ## **Tools Used:**
 
 HTML5, CSS3, jQuery, JavaScript,
-Trello, Wireframe, SublimeText3
+Trello, Wireframe, SublimeText3, Google
 
 ## **Bottle Necks:**
 
@@ -39,8 +41,12 @@ Trello, Wireframe, SublimeText3
 
 ## **Future Upgrade Plan:**
 
-Make the game compatible with other browsers using viewport.
+Make the game compatible with other browsers.
 
 ## **Lesson Learned:**  
  
-Better understanding of how to use CSS. When positioning your elements start with the big ones and narrow it down. 
+ 
+- When positioning your elements start with the big ones and narrow it down. 
+- Utilize chrome developer tools to observe behavior.
+- Create better testing environment and procedures.
+- Time management / Project management : Set priorities and make development decisions as the project flows.
