@@ -4,31 +4,34 @@ $(document).ready(function() {
     var moves = ["", "", "", "", "", "", "", "", ""];
     var count = 0;
     var turn = 'X';
-    var playerOneWin = 0;
-    var playerTwoWin = 0;
+    var playerXWin = 0;
+    var playerOWin = 0;
     var tie = 0;
     var gameBoardOnOff = 0;
     var turnComputerOff = 0;
+    var selectGameMode;
 
-    var gameMode = prompt('Choose Game Mode\n1. Player vs Player\n2. Player vs Computer');
+    gameMode();
 
-    if(gameMode == 1){
-       $('body').attr("style", 'background-image: url("background.jpg"); font-family: "Montserrat", sans-serif;');
+    if (selectGameMode == 1) {
+        $('body').attr("style", 'background-image: url("background.jpg"); font-family: "Montserrat", sans-serif;');
+        displayStatus(turn);
     }
-    if(gameMode == 2){
-    $('body').attr("style", 'background-image: url("circuit.jpg"); font-family: "Orbitron", sans-serif;');
-    $('#playerO').html('COMPUTER');
-    $("#playerO").append("<div id = scoreO>0</div>")
+    if (selectGameMode == 2) {
+        $('body').attr("style", 'background-image: url("circuit.jpg"); font-family: "Orbitron", sans-serif;');
+        $('#playerO').html('COMPUTER');
+        $("#playerO").append("<div id = scoreO>0</div>");
+        displayStatus(turn);
 
     }
 
     $($gameCells).on('click', function() {
-         if(gameMode == 1){
+        if (selectGameMode == 1) {
             placeMove(this, gameBoardOnOff);
-         }
-         if(gameMode == 2){
+        }
+        if (selectGameMode == 2) {
             playHuman(this, gameBoardOnOff);
-         }
+        }
     });
 
     $('#newGame').on('click', function() {
@@ -37,27 +40,27 @@ $(document).ready(function() {
 
     $('#playAgain').on('click', function() {
         resetBoard();
+        displayStatus(turn);
     });
 
     //Place either "X" or "O" on the game board.
     function placeMove(this2, gameBoardOnOff) {
         if (gameBoardOnOff == 0) {
-            if(moves[this2.id] == 'X' || moves[this2.id] == 'O') {
-                console.log('Position filled')
-            }
-            else {
-            console.log('Move was placed');
-            console.log(this2.id);
+            if (moves[this2.id] == 'X' || moves[this2.id] == 'O') {
+                console.log('Position filled');
+            } else {
+                console.log('Move was placed');
+                console.log(this2.id);
 
-            $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;")
+                $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;");
 
-            moves[this2.id] = turn;
-            count++;
-            turn = (turn == 'X') ? 'O' : 'X';
-
-            displayStatus(turn);
-            checkWin(moves, count);
-            console.log(moves, count);
+                displayStatus(turn);
+                moves[this2.id] = turn;
+                count++;
+                turn = (turn == 'X') ? 'O' : 'X';
+                displayStatus(turn);
+                checkWin(moves, count);
+                console.log(moves, count);
             }
         } else if (gameBoardOnOff == 1) {
             console.log('Gameboard is off');
@@ -67,24 +70,27 @@ $(document).ready(function() {
     //Place either "X" or "O" on the game board.
     function playHuman(this2, gameBoardOnOff) {
         if (gameBoardOnOff == 0) {
-            if(moves[this2.id] == 'X' || moves[this2.id] == 'O') {
-                console.log('Position filled')
-            }
-            else {
-            console.log('Human move was placed at ' + this2.id);
+            if (moves[this2.id] == 'X' || moves[this2.id] == 'O') {
+                console.log('Position filled');
+            } else {
+                console.log('Human move was placed at ' + this2.id);
 
-            $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;");
+                $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;");
 
-            moves[this2.id] = turn;
-            count++;
-            turn = (turn == 'X') ? 'O' : 'X';
+                displayStatus(turn);
+                moves[this2.id] = turn;
+                count++;
+                turn = (turn == 'X') ? 'O' : 'X';
 
-            displayStatus(turn);
-            checkWin(moves, count);
-            console.log(moves, count);
-            if (turnComputerOff == 0) {
-            playComputer();
-            }
+                displayStatus(turn);
+                checkWin(moves, count);
+                console.log(moves, count);
+
+setTimeout(function (){
+                if (turnComputerOff == 0) {
+                    playComputer();
+                }
+                  }, 2000);
             }
         } else if (gameBoardOnOff == 1) {
             console.log('Gameboard is off');
@@ -93,22 +99,24 @@ $(document).ready(function() {
 
     function playComputer() {
 
-        var randomNum = Math.floor(Math.random() * 9);
-        if(count != 9){
-        while (moves[randomNum] == 'X' || moves[randomNum] == 'O') {
-            randomNum = Math.floor(Math.random() * 9);
-        }
-    }
-        moves[randomNum] = turn;
-        console.log('random number is ' +randomNum);
-        test = '#' + randomNum;
 
+        var randomNum = Math.floor(Math.random() * 9);
+        if (count != 9) {
+            while (moves[randomNum] == 'X' || moves[randomNum] == 'O') {
+                randomNum = Math.floor(Math.random() * 9);
+            }
+        }
+        moves[randomNum] = turn;
+        console.log('random number is ' + randomNum);
+        test = '#' + randomNum;
 
         $(test).html(turn).attr("style", "color: red; text-align: center; line-height:150px;")
 
         console.log('Computer move is placed');
         count++;
+           displayStatus(turn);
         turn = (turn == 'X') ? 'O' : 'X';
+           displayStatus(turn);
         console.log(moves, count);
         checkWin(moves, count);
     }
@@ -124,10 +132,27 @@ $(document).ready(function() {
             (move[0] == 'X' && move[4] == 'X' && move[8] == 'X') ||
             (move[2] == 'X' && move[4] == 'X' && move[6] == 'X')) {
             displayStatus(3);
-            playerOneWin++;
+            playerXWin++;
             turnComputerOff = 1;
             gameBoardOnOff = 1;
-            updateScoreboard(1, playerOneWin);
+            updateScoreboard(1, playerXWin);
+
+            //         $('#0').each(function() {
+            //             console.log('TEST');
+
+
+            // var elem = $(this);
+            // console.log(elem);
+            // console.log(this);
+            // setInterval(function() {
+            //     if (elem.css('border-right') == 'lightblue') {
+            //         elem.css('border-right', 'lightblue');
+            //     } else {
+            //         elem.css('border-right', 'null');
+            //     //     }
+            //     // }, 600);
+
+            // });
         } else if ((move[0] == 'O' && move[1] == 'O' && move[2] == 'O') ||
             (move[3] == 'O' && move[4] == 'O' && move[5] == 'O') ||
             (move[6] == 'O' && move[7] == 'O' && move[8] == 'O') ||
@@ -138,8 +163,8 @@ $(document).ready(function() {
             (move[2] == 'O' && move[4] == 'O' && move[6] == 'O')) {
             displayStatus(4);
             gameBoardOnOff = 1;
-            playerTwoWin++;
-            updateScoreboard(2, playerTwoWin);
+            playerOWin++;
+            updateScoreboard(2, playerOWin);
         } else if (count == 9) {
             displayStatus(5);
             tie++;
@@ -192,23 +217,76 @@ $(document).ready(function() {
     //Display current turn on screen
     function displayStatus(turn2) {
         if (turn2 == 'X') {
-            $('#gameInfo').html('"X" Turn');
+            $('#tie').attr("style", "opacity: 0.2;");
+            $('#playerO').attr("style", "opacity: 0.2;");
+            $('#playerX').attr("style", "opacity: 1;");
+
         } else if (turn2 == 'O') {
-            $('#gameInfo').html('"O" Turn');
+            $('#playerX').attr("style", "opacity: 0.2;");
+            $('#tie').attr("style", "opacity: 0.2;");
+            $('#playerO').attr("style", "opacity: 1;");
+
         } else if (turn2 == 3) {
-            $('#gameInfo').html('"X" Wins!');
+            blink(1);
+            $('#playerX').attr("style", "opacity: 1;");
+            $('#tie').attr("style", "opacity: 1;");
+            $('#playerO').attr("style", "opacity: 1;");
         } else if (turn2 == 4) {
-            $('#gameInfo').html('"O" Wins!');
+            blink(2);
+            $('#playerX').attr("style", "opacity: 1;");
+            $('#tie').attr("style", "opacity: 1;");
+            $('#playerO').attr("style", "opacity: 1;");
         } else if (turn2 == 5) {
-            $('#gameInfo').html("It's a Tie");
-        } else {
-            $('#gameInfo').html("Let's Play!");
+            blink(3);
+            $('#playerX').attr("style", "opacity: 1;");
+            $('#tie').attr("style", "opacity: 1;");
+            $('#playerO').attr("style", "opacity: 1;");
         }
     }
 
+    function blink(num) {
+        var winner;
+        if (num == 1){
+         winner = $('#playerX');
+        } else if (num == 2){
+         winner = $('#playerO');
+        } else if (num == 3){
+         winner = $('#tie');
+        }
+
+            var blink2 = setInterval(function() {
+                    if (winner.css('visibility') == 'hidden') {
+                        winner.css('visibility', 'visible');
+                    } else {
+                        winner.css('visibility', 'hidden');
+                    }
+                }, 700);
+            // });
+     console.log('Have you reached here?');
+
+  // Something you want delayed.
+
+// }, 100); // How long do you want the delay to be (in milliseconds)?
+setTimeout(function (){
+    console.log('Have you reached here too?');
+
+            // $('#tie').attr("style", "opacity: 0.2;");
+            // $('#playerO').attr("style", "opacity: 0.2;");
+ clearInterval(blink2);
+
+            // $('#tie').attr("style", "opacity: 1;");
+            // $('#playerO').attr("style", "opacity: 1;");
+}, 4500);
+// $('#playerX').removeAttr("style");
+           // console.log('Is this for loop going?')
+        // }
+        // clearInterval(blink2);
+        // console.log('Have you reached here?');
+}
+
+
     //Choose game mode (PvP vs PvC)
     function gameMode() {
-        var mode = prompt('Please choose your game mode! (PvP or PvC)');
+        selectGameMode = prompt('Choose Game Mode\n1. Player vs Player\n2. Player vs Computer');
     }
 })
-
