@@ -17,7 +17,7 @@ Demo: <http://h4ru87.github.io/TIC.TAC.TOE./>
 ## **Planning**: 
 
 Wireframe: 
-![Alt Image Text](./trello.png "Screenshot")
+![Alt Image Text](./Trello.png "Screenshot")
 
 [Trello Website](https://trello.com/b/ewDkKXAl/project-tic-tac-toe)
 
