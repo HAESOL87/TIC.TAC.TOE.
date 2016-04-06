@@ -10,9 +10,25 @@ $(document).ready(function() {
     var gameBoardOnOff = 0;
     var turnComputerOff = 0;
 
+    var gameMode = prompt('Choose Game Mode\n1. Player vs Player\n2. Player vs Computer');
+
+    if(gameMode == 1){
+       $('body').attr("style", 'background-image: url("background.jpg"); font-family: "Montserrat", sans-serif;');
+    }
+    if(gameMode == 2){
+    $('body').attr("style", 'background-image: url("circuit.jpg"); font-family: "Orbitron", sans-serif;');
+    $('#playerO').html('COMPUTER');
+    $("#playerO").append("<div id = scoreO>0</div>")
+
+    }
+
     $($gameCells).on('click', function() {
-         console.log(playerOneWin);
-        playHuman(this, gameBoardOnOff);
+         if(gameMode == 1){
+            placeMove(this, gameBoardOnOff);
+         }
+         if(gameMode == 2){
+            playHuman(this, gameBoardOnOff);
+         }
     });
 
     $('#newGame').on('click', function() {
@@ -24,6 +40,31 @@ $(document).ready(function() {
     });
 
     //Place either "X" or "O" on the game board.
+    function placeMove(this2, gameBoardOnOff) {
+        if (gameBoardOnOff == 0) {
+            if(moves[this2.id] == 'X' || moves[this2.id] == 'O') {
+                console.log('Position filled')
+            }
+            else {
+            console.log('Move was placed');
+            console.log(this2.id);
+
+            $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;")
+
+            moves[this2.id] = turn;
+            count++;
+            turn = (turn == 'X') ? 'O' : 'X';
+
+            displayStatus(turn);
+            checkWin(moves, count);
+            console.log(moves, count);
+            }
+        } else if (gameBoardOnOff == 1) {
+            console.log('Gameboard is off');
+        }
+    }
+
+    //Place either "X" or "O" on the game board.
     function playHuman(this2, gameBoardOnOff) {
         if (gameBoardOnOff == 0) {
             if(moves[this2.id] == 'X' || moves[this2.id] == 'O') {
@@ -32,7 +73,7 @@ $(document).ready(function() {
             else {
             console.log('Human move was placed at ' + this2.id);
 
-            $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;")
+            $(this2).html(turn).attr("style", "color: lightblue; text-align: center; line-height:150px;");
 
             moves[this2.id] = turn;
             count++;

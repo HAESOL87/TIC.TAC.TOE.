@@ -44,5 +44,3 @@ Make the game compatible with other browsers using viewport.
 ## **Lesson Learned:**  
  
 Better understanding of how to use CSS. When positioning your elements start with the big ones and narrow it down. 
-
-
