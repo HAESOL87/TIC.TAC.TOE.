@@ -5,7 +5,7 @@
 
 Create a fully functional Tic Tac Toe game using the knowledge I have acquired during the first two weeks of WDI class. 
 
-Demo: <http://h4ru87.github.io/TIC.TAC.TOE./>
+[Demo](http://haesol87.github.io/TIC.TAC.TOE./)
 	
 ## **Key Goals:**
 
